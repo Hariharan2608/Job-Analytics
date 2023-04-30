@@ -28,9 +28,9 @@ st.set_page_config(
         # padding-bottom: {padding}rem;
     # }} </style> """, unsafe_allow_html=True)
     
-st.markdown(""" <style>
-#MainMenu {visibility: hidden;}
-</style> """, unsafe_allow_html=True)
+# st.markdown(""" <style>
+# #MainMenu {visibility: hidden;}
+# </style> """, unsafe_allow_html=True)
 
 # front end elements of the web page 
 html_temp = """ 
