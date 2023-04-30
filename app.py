@@ -1,8 +1,6 @@
 import streamlit as st
 import pandas as pd
-from PIL import Image
-from pyspellchecker import SpellChecker
-import subprocess
+from spellchecker import SpellChecker
 
 df2 = pd.read_csv("finalcleandata.csv")
 df2['Skills1'] = df2['Skills1'].fillna("")
