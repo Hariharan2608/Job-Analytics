@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from PIL import Image
-from spellchecker import SpellChecker
+from pyspellchecker import SpellChecker
 import subprocess
 
 df2 = pd.read_csv("finalcleandata.csv")
