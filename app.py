@@ -58,7 +58,7 @@ spell.word_frequency.load_words(skills)
 
 
 text_search = st.text_input("**Search Skills**", value="")
-    try:
+try:
     if text_search:
         corrected_input = spell.correction(text_search)
         st.write(f'Searching for jobs related to: {corrected_input}')
