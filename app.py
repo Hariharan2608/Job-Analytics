@@ -58,112 +58,113 @@ spell.word_frequency.load_words(skills)
 
 
 text_search = st.text_input("**Search Skills**", value="")
-
-if text_search:
-    corrected_input = spell.correction(text_search)
-    st.write(f'Searching for jobs related to: {corrected_input}')
-    m1 = df2["lower_skills1"].str.contains(corrected_input)
-    m2 = df2["lower_skills2"].str.contains(corrected_input)
-    m3 = df2["lower_skills3"].str.contains(corrected_input)
-    m4 = df2["lower_skills4"].str.contains(corrected_input)
-    m5 = df2["lower_skills5"].str.contains(corrected_input)
-    m6 = df2["lower_skills6"].str.contains(corrected_input)
-    m7 = df2["lower_skills7"].str.contains(corrected_input)
-
-
-    df_search = df2[m1 | m2 | m3 | m4 | m5 | m6 | m7]
-    #.drop('Skills1',axis=1)
-    df_search = df_search.reset_index(drop=True)
-    df_search.index += 1
+    try:
+    if text_search:
+        corrected_input = spell.correction(text_search)
+        st.write(f'Searching for jobs related to: {corrected_input}')
+        m1 = df2["lower_skills1"].str.contains(corrected_input)
+        m2 = df2["lower_skills2"].str.contains(corrected_input)
+        m3 = df2["lower_skills3"].str.contains(corrected_input)
+        m4 = df2["lower_skills4"].str.contains(corrected_input)
+        m5 = df2["lower_skills5"].str.contains(corrected_input)
+        m6 = df2["lower_skills6"].str.contains(corrected_input)
+        m7 = df2["lower_skills7"].str.contains(corrected_input)
 
 
-
-    if corrected_input:
-        col1,col2 = st.columns(2)
-        with col1:
-            st.markdown('<h4 style="color: black">Most Common Experience Level :</h4>', unsafe_allow_html=True)
-            st.markdown('<h4 style="color: black">Most Common Workplace :</h4>', unsafe_allow_html=True)
-            st.markdown('<h4 style="color: black">Most Common Classes :</h4>', unsafe_allow_html=True)
-            st.markdown('<h4 style="color: black">Total Number of Jobs Available :</h4>', unsafe_allow_html=True)
-               
-        with col2:
-            exp = df_search['Experience Category'].mode()[0]
-            st.markdown(f'<h4 style="color: green">{exp}</h4>', unsafe_allow_html=True)
-            
-            loc = df_search['Locations'].mode()[0]
-            st.markdown(f'<h4 style="color: green">{loc}</h4>', unsafe_allow_html=True)
-           
-            cls = df_search['Cluster'].mode()[0]
-            st.markdown(f'<h4 style="color: green">{cls}</h4>', unsafe_allow_html=True)
-
-            num_jobs = str(len(df_search))
-            st.markdown(f'<h4 style="color: green">{num_jobs}</h4>', unsafe_allow_html=True)
+        df_search = df2[m1 | m2 | m3 | m4 | m5 | m6 | m7]
+        #.drop('Skills1',axis=1)
+        df_search = df_search.reset_index(drop=True)
+        df_search.index += 1
 
 
-    
-    # if corrected_input:
-        # exp = df_search['Experience Category'].mode()[0]
-        # st.subheader(f'**Most Common Experience Level** : **:green[{exp}]**')
-        
-        # loc = df_search['Locations'].mode()[0]
-        # st.subheader(f'**Most Common Workplace** : **:green[{loc}]**')
-        
-        # cls = df_search['Cluster'].mode()[0]
-        # st.subheader(f'**Most Common Classes** : **:green[{cls}]**')
-    
-        # num_jobs = len(df_search)
-        # st.subheader(f'**Total Number of Jobs Available** : **:green[{num_jobs}]**')
-        
-        
-# col1, col2, col3, col4, col5 = st.columns(5)
 
-# with col5:
-        st.markdown(
-            """
-            <style>
-                .stButton>button {
-                    background-color: #3275a8;
+        if corrected_input:
+            col1,col2 = st.columns(2)
+            with col1:
+                st.markdown('<h4 style="color: black">Most Common Experience Level :</h4>', unsafe_allow_html=True)
+                st.markdown('<h4 style="color: black">Most Common Workplace :</h4>', unsafe_allow_html=True)
+                st.markdown('<h4 style="color: black">Most Common Classes :</h4>', unsafe_allow_html=True)
+                st.markdown('<h4 style="color: black">Total Number of Jobs Available :</h4>', unsafe_allow_html=True)
+
+            with col2:
+                exp = df_search['Experience Category'].mode()[0]
+                st.markdown(f'<h4 style="color: green">{exp}</h4>', unsafe_allow_html=True)
+
+                loc = df_search['Locations'].mode()[0]
+                st.markdown(f'<h4 style="color: green">{loc}</h4>', unsafe_allow_html=True)
+
+                cls = df_search['Cluster'].mode()[0]
+                st.markdown(f'<h4 style="color: green">{cls}</h4>', unsafe_allow_html=True)
+
+                num_jobs = str(len(df_search))
+                st.markdown(f'<h4 style="color: green">{num_jobs}</h4>', unsafe_allow_html=True)
+
+
+
+        # if corrected_input:
+            # exp = df_search['Experience Category'].mode()[0]
+            # st.subheader(f'**Most Common Experience Level** : **:green[{exp}]**')
+
+            # loc = df_search['Locations'].mode()[0]
+            # st.subheader(f'**Most Common Workplace** : **:green[{loc}]**')
+
+            # cls = df_search['Cluster'].mode()[0]
+            # st.subheader(f'**Most Common Classes** : **:green[{cls}]**')
+
+            # num_jobs = len(df_search)
+            # st.subheader(f'**Total Number of Jobs Available** : **:green[{num_jobs}]**')
+
+
+    # col1, col2, col3, col4, col5 = st.columns(5)
+
+    # with col5:
+            st.markdown(
+                """
+                <style>
+                    .stButton>button {
+                        background-color: #3275a8;
+                    }
+                </style>
+                """,
+                unsafe_allow_html=True,
+            )
+            if st.button("Job Details >>"):
+                #subprocess.Popen(["streamlit", "run", "job_info.py"])
+
+                data = pd.concat([df_search['Company'], df_search['Designation'], df_search['Locations'].rename("Workplace"),df_search['HR_Name'].rename("HR Name"),df_search['Experience'],df_search['Link'].rename("Apply Link")], axis=1)
+                st.write(data)
+
+                # Define card style
+                card_style = """
+                <style>
+                .card {
+                    display: inline-block;
+                    padding: 1rem;
+                    margin: 1rem;
+                    background-color: #f0f0f0;
+                    border-radius: 0.5rem;
+                    width: 650px;
+                    height: 310px;
                 }
-            </style>
-            """,
-            unsafe_allow_html=True,
-        )
-        if st.button("Job Details >>"):
-            #subprocess.Popen(["streamlit", "run", "job_info.py"])
-            
-            data = pd.concat([df_search['Company'], df_search['Designation'], df_search['Locations'].rename("Workplace"),df_search['HR_Name'].rename("HR Name"),df_search['Experience'],df_search['Link'].rename("Apply Link")], axis=1)
-            st.write(data)
-            
-            # Define card style
-            card_style = """
-            <style>
-            .card {
-                display: inline-block;
-                padding: 1rem;
-                margin: 1rem;
-                background-color: #f0f0f0;
-                border-radius: 0.5rem;
-                width: 650px;
-                height: 310px;
-            }
-            </style>
-            """
+                </style>
+                """
 
-            # Add card style to app
-            st.markdown(card_style, unsafe_allow_html=True)
+                # Add card style to app
+                st.markdown(card_style, unsafe_allow_html=True)
 
-            # Loop through records and create cards
-            for index, row in data.iterrows():
-                card = """
-                <div class="card">
-                    <h4>Company Name  :  {}</h4>
-                    <h5>Designation    :  {}</h5>
-                    <h5>Workplace      :  {}</h5>   
-                    <h5>HR Name        :  {}</h5>
-                    <h5>Experience     :  {}</h5>
-                    <a href="{link}">Click Here to Apply</a>
-                </div>
-                """.format(row['Company'], row['Designation'], row['Workplace'], row['HR Name'], row['Experience'], link=row['Apply Link'])
-                
-                st.markdown(card, unsafe_allow_html=True)
+                # Loop through records and create cards
+                for index, row in data.iterrows():
+                    card = """
+                    <div class="card">
+                        <h4>Company Name  :  {}</h4>
+                        <h5>Designation    :  {}</h5>
+                        <h5>Workplace      :  {}</h5>   
+                        <h5>HR Name        :  {}</h5>
+                        <h5>Experience     :  {}</h5>
+                        <a href="{link}">Click Here to Apply</a>
+                    </div>
+                    """.format(row['Company'], row['Designation'], row['Workplace'], row['HR Name'], row['Experience'], link=row['Apply Link'])
 
+                    st.markdown(card, unsafe_allow_html=True)
+except:
+    st.warning("**Try Other Skill**")
