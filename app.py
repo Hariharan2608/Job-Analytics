@@ -1,9 +1,12 @@
+#Importing the Libraries
 import streamlit as st
 import pandas as pd
 from spellchecker import SpellChecker
-
+#Reading the file
 df2 = pd.read_csv("finalcleandata.csv")
+
 df2['Skills1'] = df2['Skills1'].fillna("")
+#convert everything into smaller case
 df2["lower_skills1"] = df2['Skills1'].str.lower()
 df2["lower_skills2"] = df2['Skills2'].str.lower()
 df2["lower_skills3"] = df2['Skills3'].str.lower()
@@ -12,7 +15,7 @@ df2["lower_skills5"] = df2['Skills5'].str.lower()
 df2["lower_skills6"] = df2['Skills6'].str.lower()
 df2["lower_skills7"] = df2['Skills7'].str.lower()
 
-
+##page configuration
 st.set_page_config(
     page_title="Job Analytics",
     page_icon="💼",
@@ -48,7 +51,7 @@ st.markdown(html_temp, unsafe_allow_html = True)
 st.markdown("<h4> Our search feature displays the most prevalent experience level, top workplace, and popular classes for a particular skill, along with the total number of jobs related to that skill.</h>", unsafe_allow_html=True)
 
 
-
+#implements the nlp
 with open('dictionary.txt') as f:
     skills = f.read().splitlines()
 
@@ -56,7 +59,7 @@ with open('dictionary.txt') as f:
 spell = SpellChecker(language=None, case_sensitive=False)
 spell.word_frequency.load_words(skills)
 
-
+#searchbar
 text_search = st.text_input("**Search Skills**", value="")
 try:
     if text_search:
@@ -70,14 +73,14 @@ try:
         m6 = df2["lower_skills6"].str.contains(corrected_input)
         m7 = df2["lower_skills7"].str.contains(corrected_input)
 
-
+        #converting it into dataframe
         df_search = df2[m1 | m2 | m3 | m4 | m5 | m6 | m7]
         #.drop('Skills1',axis=1)
         df_search = df_search.reset_index(drop=True)
         df_search.index += 1
 
 
-
+        #making cards for each dataframe
         if corrected_input:
             col1,col2 = st.columns(2)
             with col1:
@@ -128,6 +131,7 @@ try:
                 """,
                 unsafe_allow_html=True,
             )
+            ##for applying the jobs
             if st.button("Job Details >>"):
                 #subprocess.Popen(["streamlit", "run", "job_info.py"])
 
